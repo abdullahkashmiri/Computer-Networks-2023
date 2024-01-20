@@ -1,0 +1,244 @@
+//Data Or Important Points
+
+//simple file handling 
+ 
+#include<unistd.h>
+#include<string.h>
+#include<stdio.h>
+
+int main() {
+
+char * inputfile = "input.txt";
+char* outputfile = "output.txt";
+
+FILE* infile = fopen(inputfile, "r");
+FILE* outfile = fopen(outputfile, "w");
+
+if(infile == NULL || outfile == NULL) {
+printf("Files not found");
+return 1; 
+}
+
+
+char* line = NULL;
+size_t  size;
+ssize_t  read;
+
+char* word = NULL;
+int i;
+
+while(read = getline(&line, &size, infile) != EOF) {
+//printf("%s", line);
+
+
+word = strtok(line, " ");
+while(word != NULL) {
+  //printf("%s\n", word);
+  //fputs(word, outfile);
+  
+  int len = strlen(word);
+  printf("length: %d  %s\n", len, word);
+  for(i=0;i<len;i++) {
+    char ch = word[i];
+    fputc(ch, outfile);
+  }
+  
+  word = strtok(NULL, " ");
+  }
+}
+    fclose(infile);
+    fclose(outfile);
+    if (line) {
+        free(line);  
+}
+printf("Program terminated successfully");
+return 0;
+}
+
+-----------------------------------------------------
+
+
+ 
+//Reverse String 
+#include <stdio.h>
+#include <string.h> 
+
+int main() {
+ 
+    char str[] = "Hello How are you!";
+    printf("%s\n", str);
+    int len = strlen(str);
+    // printf("%d", len);
+    int start = 0;
+    int end = len - 1;
+    char temp;
+    while(start<end) {
+        temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+        }
+    printf("%s\n", str);
+    return 0;
+}
+
+-----------------------------------------------------
+
+//clearing storage
+
+memset(str, '\0', sizeof(str));
+
+-----------------------------------------------------
+
+
+TCP CLIENT
+
+//creating socket
+socket()
+//connecting to server
+connect()
+//sending message
+send()
+//receiving message
+recv()
+//closing socket
+close()
+
+TCP SERVER
+
+//creating socket
+socket()
+//binding socket
+bind()
+//listening for client
+listen()
+//ack using accept
+accept()
+//receiving message
+recv()
+//sending message
+send()
+//closing socket
+close()
+
+
+-----------------------------------------------------
+
+
+
+
+UDP CLIENT
+
+//creating socket
+socket() 
+//sending message
+sendto()
+//receiving message
+recvfrom()
+//closing socket
+close()
+
+UDP SERVER
+
+//creating socket
+socket()
+//binding socket
+bind()
+//receiving message
+recvfrom()
+//sending message
+sendto()
+//closing socket
+close()
+
+
+-----------------------------------------------------
+
+strings opeartions
+
+
+    // String Length
+    char str1[] = "Hello, World!";
+    size_t length = strlen(str1);
+    printf("String Length: %zu\n", length);
+
+String Length: 13
+
+    // String Copy
+    char str2[20];
+    strcpy(str2, str1);
+    printf("String Copy: %s\n", str2);
+
+String Copy: Hello, World!
+
+    // String Concatenation
+    strcat(str2, " Welcome!");
+    printf("String Concatenation: %s\n", str2);
+
+String Concatenation: Hello, World! Welcome!
+
+    // String Comparison
+    char str3[] = "Hello, Universe!";
+    int result = strcmp(str1, str3);
+    printf("String Comparison: %d\n", result);
+
+String Comparison: -15
+
+    // Substring Search
+    char* substring = strstr(str2, "Welcome");
+    if (substring != NULL) {
+        printf("Substring Found: %s\n", substring);
+    } else {
+        printf("Substring Not Found\n");
+    }
+
+Substring Found: Welcome!
+
+    // String Tokenization
+    char sentence[] = "This is a sample sentence.";
+    char* token = strtok(sentence, " ");
+    while (token != NULL) {
+        printf("Token: %s\n", token);
+        token = strtok(NULL, " ");
+    }
+
+Token: This
+Token: is
+Token: a
+Token: sample
+Token: sentence.
+
+    // String Comparison (Case-Insensitive)
+    result = strcasecmp(str1, str3);
+    printf("Case-Insensitive Comparison: %d\n", result);
+
+Case-Insensitive Comparison: -1
+
+    // String Formatting
+    char formattedStr[50];
+    sprintf(formattedStr, "The length of str1 is %zu", length);
+    printf("Formatted String: %s\n", formattedStr);
+
+Formatted String: The length of str1 is 13
+
+    // String Conversion to Integer
+    char numStr[] = "123";
+    int number = atoi(numStr);
+    printf("Converted Integer: %d\n", number);
+
+Converted Integer: 123
+
+char *strncpy(char *dest, const char *src, size_t n);
+Copies a specified number of characters from one string to another.
+char *strchr(const char *s, int c);
+Locates the first occurrence of a character in a string.
+char *strncat(char *dest, const char *src, size_t n);
+Concatenates two strings with a specified maximum number of characters.
+int strncmp(const char *s1, const char *s2, size_t n);
+Compares two strings up to a specified number of characters.
+void *memset(void *s, int c, size_t n);
+Sets a specified number of bytes in a block of memory to a particular value.
+
+
+-----------------------------------------------------

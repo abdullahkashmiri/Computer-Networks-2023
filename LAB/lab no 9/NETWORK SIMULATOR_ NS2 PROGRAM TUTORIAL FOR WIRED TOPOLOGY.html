@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)http://ns2blogger.blogspot.in/p/introduction-to-wired-topology.html -->
+<html class="v2" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://www.google.com/2005/gml/b" xmlns:data="http://www.google.com/2005/gml/data" xmlns:expr="http://www.google.com/2005/gml/expr" style="height: 100%;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/cb=gapi.loaded_3" async=""></script><script src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/cb=gapi.loaded_2" async=""></script><script src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/cb=gapi.loaded_1" async=""></script><script src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="http://ws-eu.assoc-amazon.com/widgets/q?ServiceVersion=20070822&amp;MarketPlace=IN&amp;Operation=GetAdHtml&amp;OneJS=1&amp;slotNum=0&amp;height=250&amp;placement=adunit&amp;theme=light&amp;tracking_id=nb0ee-21&amp;bg_color=FFFFFF&amp;width=650&amp;ad_type=responsive_search_widget&amp;marketplace=amazon&amp;search_type=search_widget&amp;region=IN&amp;default_search_category=&amp;default_search_key=&amp;jsonp=amzn_assoc_jsonp_callback_adunit_0" charset="UTF-8"></script>
+<link href="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/73244247-css_bundle_v2.css" rel="stylesheet" type="text/css">
+<meta content="width=1100" name="viewport">
+
+<meta content="blogger" name="generator">
+<link href="http://ns2blogger.blogspot.in/favicon.ico" rel="icon" type="image/x-icon">
+<link href="http://ns2blogger.blogspot.com/p/introduction-to-wired-topology.html" rel="canonical">
+<link rel="alternate" type="application/atom+xml" title="NETWORK SIMULATOR - Atom" href="http://ns2blogger.blogspot.com/feeds/posts/default">
+<link rel="alternate" type="application/rss+xml" title="NETWORK SIMULATOR - RSS" href="http://ns2blogger.blogspot.com/feeds/posts/default?alt=rss">
+<link rel="service.post" type="application/atom+xml" title="NETWORK SIMULATOR - Atom" href="https://www.blogger.com/feeds/6303053470301525275/posts/default">
+<!--[if IE]><script type="text/javascript" src="https://www.blogger.com/static/v1/jsbin/3858758734-ieretrofit.js"></script>
+<![endif]-->
+<link href="https://plus.google.com/114941695049214786176" rel="publisher">
+<meta content="http://ns2blogger.blogspot.com/p/introduction-to-wired-topology.html" property="og:url">
+<meta content="NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY" property="og:title">
+<meta content="    In this section, we are going to develop a Tcl script for ns which simulates a simple topology. You are going to learn how to set up nod..." property="og:description">
+<meta content="https://lh4.googleusercontent.com/proxy/xnUCYvEzyPOCdTkp3ISUWQ4m7szmC5GuITB244wxaNWG8Pm2n6x98sd4qDfllMnUmVJ9KlxF-jmnwMftLyVA63J6v5IYXmXg__Q=w1200-h630-p-k-no-nu" property="og:image">
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<title>
+NETWORK SIMULATOR: NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY
+</title>
+<style type="text/css">@font-face{font-family:'Cuprum';font-style:normal;font-weight:400;src:local('Cuprum Regular'),local('Cuprum-Regular'),url(//fonts.gstatic.com/s/cuprum/v9/L68C_lfqWi9qewOVO5PMpvesZW2xOQ-xsNqO47m55DA.woff2)format('woff2');unicode-range:U+0460-052F,U+20B4,U+2DE0-2DFF,U+A640-A69F;}@font-face{font-family:'Cuprum';font-style:normal;font-weight:400;src:local('Cuprum Regular'),local('Cuprum-Regular'),url(//fonts.gstatic.com/s/cuprum/v9/gJovVCIsuVHpE7lUT-5TYfesZW2xOQ-xsNqO47m55DA.woff2)format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Cuprum';font-style:normal;font-weight:400;src:local('Cuprum Regular'),local('Cuprum-Regular'),url(//fonts.gstatic.com/s/cuprum/v9/DI1na1b1POSaf-9Y8s5AcvesZW2xOQ-xsNqO47m55DA.woff2)format('woff2');unicode-range:U+0102-0103,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Cuprum';font-style:normal;font-weight:400;src:local('Cuprum Regular'),local('Cuprum-Regular'),url(//fonts.gstatic.com/s/cuprum/v9/TMj3tAAbnWTxQie9wLnZ2fesZW2xOQ-xsNqO47m55DA.woff2)format('woff2');unicode-range:U+0100-024F,U+1E00-1EFF,U+20A0-20AB,U+20AD-20CF,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Cuprum';font-style:normal;font-weight:400;src:local('Cuprum Regular'),local('Cuprum-Regular'),url(//fonts.gstatic.com/s/cuprum/v9/rZj40-VH1f1Wt0yg6Fkbcw.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2212,U+2215;}@font-face{font-family:'Philosopher';font-style:normal;font-weight:400;src:local('Philosopher Regular'),local('Philosopher-Regular'),url(//fonts.gstatic.com/s/philosopher/v9/OttjxgcoEsufOGSINYBGLTTOQ_MqJVwkKsUn0wKzc2I.woff2)format('woff2');unicode-range:U+0460-052F,U+20B4,U+2DE0-2DFF,U+A640-A69F;}@font-face{font-family:'Philosopher';font-style:normal;font-weight:400;src:local('Philosopher Regular'),local('Philosopher-Regular'),url(//fonts.gstatic.com/s/philosopher/v9/OttjxgcoEsufOGSINYBGLTUj_cnvWIuuBMVgbX098Mw.woff2)format('woff2');unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Philosopher';font-style:normal;font-weight:400;src:local('Philosopher Regular'),local('Philosopher-Regular'),url(//fonts.gstatic.com/s/philosopher/v9/OttjxgcoEsufOGSINYBGLb6up8jxqWt8HVA3mDhkV_0.woff2)format('woff2');unicode-range:U+0102-0103,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Philosopher';font-style:normal;font-weight:400;src:local('Philosopher Regular'),local('Philosopher-Regular'),url(//fonts.gstatic.com/s/philosopher/v9/OttjxgcoEsufOGSINYBGLY4P5ICox8Kq3LLUNMylGO4.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2212,U+2215;}</style>
+<style id="page-skin-1" type="text/css"><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Simple
+Designer: Josh Peterson
+URL:      www.noaesthetic.com
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="keycolor" description="Main Color" type="color" default="#66bbdd"/>
+<Group description="Page Text" selector="body">
+<Variable name="body.font" description="Font" type="font"
+default="normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="body.text.color" description="Text Color" type="color" default="#222222"/>
+</Group>
+<Group description="Backgrounds" selector=".body-fauxcolumns-outer">
+<Variable name="body.background.color" description="Outer Background" type="color" default="#66bbdd"/>
+<Variable name="content.background.color" description="Main Background" type="color" default="#ffffff"/>
+<Variable name="header.background.color" description="Header Background" type="color" default="transparent"/>
+</Group>
+<Group description="Links" selector=".main-outer">
+<Variable name="link.color" description="Link Color" type="color" default="#2288bb"/>
+<Variable name="link.visited.color" description="Visited Color" type="color" default="#888888"/>
+<Variable name="link.hover.color" description="Hover Color" type="color" default="#33aaff"/>
+</Group>
+<Group description="Blog Title" selector=".header h1">
+<Variable name="header.font" description="Font" type="font"
+default="normal normal 60px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="header.text.color" description="Title Color" type="color" default="#3399bb" />
+</Group>
+<Group description="Blog Description" selector=".header .description">
+<Variable name="description.text.color" description="Description Color" type="color"
+default="#777777" />
+</Group>
+<Group description="Tabs Text" selector=".tabs-inner .widget li a">
+<Variable name="tabs.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="tabs.text.color" description="Text Color" type="color" default="#999999"/>
+<Variable name="tabs.selected.text.color" description="Selected Color" type="color" default="#000000"/>
+</Group>
+<Group description="Tabs Background" selector=".tabs-outer .PageList">
+<Variable name="tabs.background.color" description="Background Color" type="color" default="#f5f5f5"/>
+<Variable name="tabs.selected.background.color" description="Selected Color" type="color" default="#eeeeee"/>
+</Group>
+<Group description="Post Title" selector="h3.post-title, .comments h4">
+<Variable name="post.title.font" description="Font" type="font"
+default="normal normal 22px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+</Group>
+<Group description="Date Header" selector=".date-header">
+<Variable name="date.header.color" description="Text Color" type="color"
+default="#222222"/>
+<Variable name="date.header.background.color" description="Background Color" type="color"
+default="transparent"/>
+<Variable name="date.header.font" description="Text Font" type="font"
+default="normal bold 11px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="date.header.padding" description="Date Header Padding" type="string" default="inherit"/>
+<Variable name="date.header.letterspacing" description="Date Header Letter Spacing" type="string" default="inherit"/>
+<Variable name="date.header.margin" description="Date Header Margin" type="string" default="inherit"/>
+</Group>
+<Group description="Post Footer" selector=".post-footer">
+<Variable name="post.footer.text.color" description="Text Color" type="color" default="#666666"/>
+<Variable name="post.footer.background.color" description="Background Color" type="color"
+default="#f9f9f9"/>
+<Variable name="post.footer.border.color" description="Shadow Color" type="color" default="#eeeeee"/>
+</Group>
+<Group description="Gadgets" selector="h2">
+<Variable name="widget.title.font" description="Title Font" type="font"
+default="normal bold 11px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="widget.title.text.color" description="Title Color" type="color" default="#000000"/>
+<Variable name="widget.alternate.text.color" description="Alternate Color" type="color" default="#999999"/>
+</Group>
+<Group description="Images" selector=".main-inner">
+<Variable name="image.background.color" description="Background Color" type="color" default="#ffffff"/>
+<Variable name="image.border.color" description="Border Color" type="color" default="#eeeeee"/>
+<Variable name="image.text.color" description="Caption Text Color" type="color" default="#222222"/>
+</Group>
+<Group description="Accents" selector=".content-inner">
+<Variable name="body.rule.color" description="Separator Line Color" type="color" default="#eeeeee"/>
+<Variable name="tabs.border.color" description="Tabs Border Color" type="color" default="#eeeeee"/>
+</Group>
+<Variable name="body.background" description="Body Background" type="background"
+color="#dd8766" default="$(color) none repeat scroll top left"/>
+<Variable name="body.background.override" description="Body Background Override" type="string" default=""/>
+<Variable name="body.background.gradient.cap" description="Body Gradient Cap" type="url"
+default="url(//www.blogblog.com/1kt/simple/gradients_light.png)"/>
+<Variable name="body.background.gradient.tile" description="Body Gradient Tile" type="url"
+default="url(//www.blogblog.com/1kt/simple/body_gradient_tile_light.png)"/>
+<Variable name="content.background.color.selector" description="Content Background Color Selector" type="string" default=".content-inner"/>
+<Variable name="content.padding" description="Content Padding" type="length" default="10px" min="0" max="100px"/>
+<Variable name="content.padding.horizontal" description="Content Horizontal Padding" type="length" default="10px" min="0" max="100px"/>
+<Variable name="content.shadow.spread" description="Content Shadow Spread" type="length" default="40px" min="0" max="100px"/>
+<Variable name="content.shadow.spread.webkit" description="Content Shadow Spread (WebKit)" type="length" default="5px" min="0" max="100px"/>
+<Variable name="content.shadow.spread.ie" description="Content Shadow Spread (IE)" type="length" default="10px" min="0" max="100px"/>
+<Variable name="main.border.width" description="Main Border Width" type="length" default="0" min="0" max="10px"/>
+<Variable name="header.background.gradient" description="Header Gradient" type="url" default="none"/>
+<Variable name="header.shadow.offset.left" description="Header Shadow Offset Left" type="length" default="-1px" min="-50px" max="50px"/>
+<Variable name="header.shadow.offset.top" description="Header Shadow Offset Top" type="length" default="-1px" min="-50px" max="50px"/>
+<Variable name="header.shadow.spread" description="Header Shadow Spread" type="length" default="1px" min="0" max="100px"/>
+<Variable name="header.padding" description="Header Padding" type="length" default="30px" min="0" max="100px"/>
+<Variable name="header.border.size" description="Header Border Size" type="length" default="1px" min="0" max="10px"/>
+<Variable name="header.bottom.border.size" description="Header Bottom Border Size" type="length" default="1px" min="0" max="10px"/>
+<Variable name="header.border.horizontalsize" description="Header Horizontal Border Size" type="length" default="0" min="0" max="10px"/>
+<Variable name="description.text.size" description="Description Text Size" type="string" default="140%"/>
+<Variable name="tabs.margin.top" description="Tabs Margin Top" type="length" default="0" min="0" max="100px"/>
+<Variable name="tabs.margin.side" description="Tabs Side Margin" type="length" default="30px" min="0" max="100px"/>
+<Variable name="tabs.background.gradient" description="Tabs Background Gradient" type="url"
+default="url(//www.blogblog.com/1kt/simple/gradients_light.png)"/>
+<Variable name="tabs.border.width" description="Tabs Border Width" type="length" default="1px" min="0" max="10px"/>
+<Variable name="tabs.bevel.border.width" description="Tabs Bevel Border Width" type="length" default="1px" min="0" max="10px"/>
+<Variable name="post.margin.bottom" description="Post Bottom Margin" type="length" default="25px" min="0" max="100px"/>
+<Variable name="image.border.small.size" description="Image Border Small Size" type="length" default="2px" min="0" max="10px"/>
+<Variable name="image.border.large.size" description="Image Border Large Size" type="length" default="5px" min="0" max="10px"/>
+<Variable name="page.width.selector" description="Page Width Selector" type="string" default=".region-inner"/>
+<Variable name="page.width" description="Page Width" type="string" default="auto"/>
+<Variable name="main.section.margin" description="Main Section Margin" type="length" default="15px" min="0" max="100px"/>
+<Variable name="main.padding" description="Main Padding" type="length" default="15px" min="0" max="100px"/>
+<Variable name="main.padding.top" description="Main Padding Top" type="length" default="30px" min="0" max="100px"/>
+<Variable name="main.padding.bottom" description="Main Padding Bottom" type="length" default="30px" min="0" max="100px"/>
+<Variable name="paging.background"
+color="#ffffff"
+description="Background of blog paging area" type="background"
+default="transparent none no-repeat scroll top center"/>
+<Variable name="footer.bevel" description="Bevel border length of footer" type="length" default="0" min="0" max="10px"/>
+<Variable name="mobile.background.overlay" description="Mobile Background Overlay" type="string"
+default="transparent none repeat scroll top left"/>
+<Variable name="mobile.background.size" description="Mobile Background Size" type="string" default="auto"/>
+<Variable name="mobile.button.color" description="Mobile Button Color" type="color" default="#ffffff" />
+<Variable name="startSide" description="Side where text starts in blog language" type="automatic" default="left"/>
+<Variable name="endSide" description="Side where text ends in blog language" type="automatic" default="right"/>
+*/
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 14px Cuprum;
+color: #222222;
+background: #dd8766 none repeat scroll top left;
+padding: 0 40px 40px 40px;
+}
+html body .region-inner {
+min-width: 0;
+max-width: 100%;
+width: auto;
+}
+h2 {
+font-size: 22px;
+}
+a:link {
+text-decoration:none;
+color: #bb5321;
+}
+a:visited {
+text-decoration:none;
+color: #888888;
+}
+a:hover {
+text-decoration:underline;
+color: #ff8632;
+}
+.body-fauxcolumn-outer .fauxcolumn-inner {
+background: transparent url(//www.blogblog.com/1kt/simple/body_gradient_tile_light.png) repeat scroll top left;
+_background-image: none;
+}
+.body-fauxcolumn-outer .cap-top {
+position: absolute;
+z-index: 1;
+height: 400px;
+width: 100%;
+}
+.body-fauxcolumn-outer .cap-top .cap-left {
+width: 100%;
+background: transparent url(//www.blogblog.com/1kt/simple/gradients_light.png) repeat-x scroll top left;
+_background-image: none;
+}
+.content-outer {
+-moz-box-shadow: 0 0 40px rgba(0, 0, 0, .15);
+-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+-goog-ms-box-shadow: 0 0 10px #333333;
+box-shadow: 0 0 40px rgba(0, 0, 0, .15);
+margin-bottom: 1px;
+}
+.content-inner {
+padding: 10px 10px;
+}
+.content-inner {
+background-color: #ffffff;
+}
+/* Header
+----------------------------------------------- */
+.header-outer {
+background: rgba(0, 0, 0, 0) none repeat-x scroll 0 -400px;
+_background-image: none;
+}
+.Header h1 {
+font: normal normal 60px Philosopher;
+color: #bb5332;
+text-shadow: -1px -1px 1px rgba(0, 0, 0, .2);
+}
+.Header h1 a {
+color: #bb5332;
+}
+.Header .description {
+font-size: 140%;
+color: #777777;
+}
+.header-inner .Header .titlewrapper {
+padding: 22px 30px;
+}
+.header-inner .Header .descriptionwrapper {
+padding: 0 30px;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-inner .section:first-child {
+border-top: 1px solid #eeeeee;
+}
+.tabs-inner .section:first-child ul {
+margin-top: -1px;
+border-top: 1px solid #eeeeee;
+border-left: 0 solid #eeeeee;
+border-right: 0 solid #eeeeee;
+}
+.tabs-inner .widget ul {
+background: #f5f5f5 url(//www.blogblog.com/1kt/simple/gradients_light.png) repeat-x scroll 0 -800px;
+_background-image: none;
+border-bottom: 1px solid #eeeeee;
+margin-top: 0;
+margin-left: -30px;
+margin-right: -30px;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+padding: .6em 1em;
+font: normal normal 14px 'Trebuchet MS', Trebuchet, sans-serif;
+color: #999999;
+border-left: 1px solid #ffffff;
+border-right: 1px solid #eeeeee;
+}
+.tabs-inner .widget li:first-child a {
+border-left: none;
+}
+.tabs-inner .widget li.selected a, .tabs-inner .widget li a:hover {
+color: #000000;
+background-color: #eeeeee;
+text-decoration: none;
+}
+/* Columns
+----------------------------------------------- */
+.main-outer {
+border-top: 0 solid #eeeeee;
+}
+.fauxcolumn-left-outer .fauxcolumn-inner {
+border-right: 1px solid #eeeeee;
+}
+.fauxcolumn-right-outer .fauxcolumn-inner {
+border-left: 1px solid #eeeeee;
+}
+/* Headings
+----------------------------------------------- */
+div.widget > h2,
+div.widget h2.title {
+margin: 0 0 1em 0;
+font: normal bold 11px 'Courier New', Courier, FreeMono, monospace;
+color: #000000;
+}
+/* Widgets
+----------------------------------------------- */
+.widget .zippy {
+color: #999999;
+text-shadow: 2px 2px 1px rgba(0, 0, 0, .1);
+}
+.widget .popular-posts ul {
+list-style: none;
+}
+/* Posts
+----------------------------------------------- */
+h2.date-header {
+font: normal bold 11px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+}
+.date-header span {
+background-color: rgba(0, 0, 0, 0);
+color: #222222;
+padding: inherit;
+letter-spacing: inherit;
+margin: inherit;
+}
+.main-inner {
+padding-top: 30px;
+padding-bottom: 30px;
+}
+.main-inner .column-center-inner {
+padding: 0 15px;
+}
+.main-inner .column-center-inner .section {
+margin: 0 15px;
+}
+.post {
+margin: 0 0 25px 0;
+}
+h3.post-title, .comments h4 {
+font: normal bold 22px 'Times New Roman', Times, FreeSerif, serif;
+margin: .75em 0 0;
+}
+.post-body {
+font-size: 110%;
+line-height: 1.4;
+position: relative;
+}
+.post-body img, .post-body .tr-caption-container, .Profile img, .Image img,
+.BlogList .item-thumbnail img {
+padding: 2px;
+background: #ffffff;
+border: 1px solid #eeeeee;
+-moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+}
+.post-body img, .post-body .tr-caption-container {
+padding: 5px;
+}
+.post-body .tr-caption-container {
+color: #222222;
+}
+.post-body .tr-caption-container img {
+padding: 0;
+background: transparent;
+border: none;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+}
+.post-header {
+margin: 0 0 1.5em;
+line-height: 1.6;
+font-size: 90%;
+}
+.post-footer {
+margin: 20px -2px 0;
+padding: 5px 10px;
+color: #666666;
+background-color: #f9f9f9;
+border-bottom: 1px solid #eeeeee;
+line-height: 1.6;
+font-size: 90%;
+}
+#comments .comment-author {
+padding-top: 1.5em;
+border-top: 1px solid #eeeeee;
+background-position: 0 1.5em;
+}
+#comments .comment-author:first-child {
+padding-top: 0;
+border-top: none;
+}
+.avatar-image-container {
+margin: .2em 0 0;
+}
+#comments .avatar-image-container img {
+border: 1px solid #eeeeee;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #999999;
+border-bottom: 1px solid #999999;
+}
+.comments .comment-thread.inline-thread {
+background-color: #f9f9f9;
+}
+.comments .continue {
+border-top: 2px solid #999999;
+}
+/* Accents
+---------------------------------------------- */
+.section-columns td.columns-cell {
+border-left: 1px solid #eeeeee;
+}
+.blog-pager {
+background: transparent none no-repeat scroll top center;
+}
+.blog-pager-older-link, .home-link,
+.blog-pager-newer-link {
+background-color: #ffffff;
+padding: 5px;
+}
+.footer-outer {
+border-top: 0 dashed #bbbbbb;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile  {
+background-size: auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+.mobile .body-fauxcolumn-outer .cap-top {
+background-size: 100% auto;
+}
+.mobile .content-outer {
+-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+}
+.mobile .tabs-inner .widget ul {
+margin-left: 0;
+margin-right: 0;
+}
+.mobile .post {
+margin: 0;
+}
+.mobile .main-inner .column-center-inner .section {
+margin: 0;
+}
+.mobile .date-header span {
+padding: 0.1em 10px;
+margin: 0 -10px;
+}
+.mobile h3.post-title {
+margin: 0;
+}
+.mobile .blog-pager {
+background: transparent none no-repeat scroll top center;
+}
+.mobile .footer-outer {
+border-top: none;
+}
+.mobile .main-inner, .mobile .footer-inner {
+background-color: #ffffff;
+}
+.mobile-index-contents {
+color: #222222;
+}
+.mobile-link-button {
+background-color: #bb5321;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile .tabs-inner .section:first-child {
+border-top: none;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background-color: #eeeeee;
+color: #000000;
+border-top: 1px solid #eeeeee;
+border-bottom: 1px solid #eeeeee;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #eeeeee;
+}
+
+--></style>
+<style id="template-skin-1" type="text/css"><!--
+body {
+min-width: 1150px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 1150px;
+max-width: 1150px;
+_width: 1150px;
+}
+.main-inner .columns {
+padding-left: 200px;
+padding-right: 200px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 200px;
+right: 200px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("200px") -
+parseInt("200px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 200px;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 200px;
+}
+.main-inner .column-left-outer {
+width: 200px;
+right: 100%;
+margin-left: -200px;
+}
+.main-inner .column-right-outer {
+width: 200px;
+margin-right: -200px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+body#layout div.add_widget {
+padding: 8px;
+}
+body#layout div.add_widget a {
+margin-left: 32px;
+}
+--></style>
+<script async="" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/analytics.js.download"></script><script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-50976784-1', 'auto', 'blogger');
+        ga('blogger.send', 'pageview');
+      </script>
+<link href="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/authorization.css" media="all" onload="if(media!=&#39;all&#39;)media=&#39;all&#39;" rel="stylesheet"><noscript>&lt;link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=6303053470301525275&amp;amp;zx=9ae3b287-5361-4581-b3e9-16e8cea0cd9f' rel='stylesheet'/&gt;</noscript>
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/translateelement.css"><script type="text/javascript" charset="UTF-8" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/main.js.download"></script><link type="text/css" rel="stylesheet" href="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/inj_tf.css" media="screen"><script charset="utf-8" type="text/javascript" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/saved_resource"></script><script type="text/javascript" charset="UTF-8" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/element_main.js.download"></script><script async="" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/lazy.min.js.download"></script></head>
+<body class="" style="position: relative; min-height: 100%; top: 0px;">
+<div class="navbar no-items section" id="navbar" name="Navbar">
+</div>
+<div class="body-fauxcolumns">
+<div class="fauxcolumn-outer body-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="content-fauxcolumns">
+<div class="fauxcolumn-outer content-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content-outer">
+<div class="content-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left content-fauxborder-left">
+<div class="fauxborder-right content-fauxborder-right"></div>
+<div class="content-inner">
+<header>
+<div class="header-outer">
+<div class="header-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left header-fauxborder-left">
+<div class="fauxborder-right header-fauxborder-right"></div>
+<div class="region-inner header-inner">
+<div class="header section" id="header" name="Header"><div class="widget Header" data-version="1" id="Header1">
+<div id="header-inner">
+<div class="titlewrapper">
+<h1 class="title">
+<a href="http://ns2blogger.blogspot.in/">
+NETWORK SIMULATOR
+</a>
+</h1>
+</div>
+<div class="descriptionwrapper">
+<p class="description">
+<span>
+Let's hunt!!
+</span>
+</p>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="header-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</header>
+<div class="tabs-outer">
+<div class="tabs-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left tabs-fauxborder-left">
+<div class="fauxborder-right tabs-fauxborder-right"></div>
+<div class="region-inner tabs-inner">
+<div class="tabs section" id="crosscol" name="Cross-column"><div class="widget PopularPosts" data-version="1" id="PopularPosts1">
+<h2>
+TRENDING POSTS
+</h2>
+<div class="widget-content popular-posts">
+<ul>
+<li>
+<a href="http://ns2blogger.blogspot.in/2014/04/nsg-21-tcl-script-generator.html">
+NSG 2.1 - THE TCL SCRIPT GENERATOR
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/2014/04/introduction-to-network-simulator-2.html">
+INTRODUCTION TO NETWORK SIMULATOR 2
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/2014/05/routing-table-generation.html">
+ROUTING TABLE GENERATION
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/2014/04/steps-to-install-ns-2-on-linux.html">
+STEPS TO INSTALL NS2 ON LINUX
+</a>
+</li>
+</ul>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=PopularPosts&amp;widgetId=PopularPosts1&amp;action=editWidget&amp;sectionId=crosscol" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;PopularPosts1&quot;));" target="configPopularPosts1" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div></div>
+<div class="tabs no-items section" id="crosscol-overflow" name="Cross-Column 2"></div>
+</div>
+</div>
+<div class="tabs-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="main-outer">
+<div class="main-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left main-fauxborder-left">
+<div class="fauxborder-right main-fauxborder-right"></div>
+<div class="region-inner main-inner">
+<div class="columns fauxcolumns">
+<div class="fauxcolumn-outer fauxcolumn-center-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-left-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-right-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class="columns-inner">
+<div class="column-center-outer">
+<div class="column-center-inner">
+<div class="main section" id="main" name="Main"><div class="widget HTML" data-version="1" id="HTML1">
+<div class="widget-content">
+<script type="text/javascript">amzn_assoc_ad_type ="responsive_search_widget"; amzn_assoc_tracking_id ="nb0ee-21"; amzn_assoc_marketplace ="amazon"; amzn_assoc_region ="IN"; amzn_assoc_placement =""; amzn_assoc_search_type = "search_widget";amzn_assoc_width ="650"; amzn_assoc_height ="250"; amzn_assoc_default_search_category =""; amzn_assoc_default_search_key ="";amzn_assoc_theme ="light"; amzn_assoc_bg_color ="FFFFFF"; </script><script src="http://z-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&amp;Operation=GetScript&amp;ID=OneJS&amp;WS=1&amp;Marketplace=IN"></script><div id="amzn_assoc_ad_div_adunit_0"></div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML1&amp;action=editWidget&amp;sectionId=main" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML1&quot;));" target="configHTML1" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget Blog" data-version="1" id="Blog1">
+<div class="blog-posts hfeed">
+
+                                        <div class="date-outer">
+                                      
+
+                                        <div class="date-posts">
+                                      
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="http://www.isi.edu/nsnam/ns/tutorial/images/namss2.gif" itemprop="image_url">
+<meta content="6303053470301525275" itemprop="blogId">
+<meta content="8238205686643952363" itemprop="postId">
+<a name="8238205686643952363"></a>
+<h3 class="post-title entry-title" itemprop="name">
+NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-8238205686643952363" itemprop="description articleBody">
+<div dir="ltr" style="text-align: left;" trbidi="on">
+<div style="text-align: justify;">
+<br></div>
+<div style="text-align: justify;">
+In this section, we are going to develop a Tcl script for ns which simulates a simple topology. You are going to learn how to set up nodes and links, how to send data from one node to another, how to monitor a queue and how to start nam from your simulation script to visualize your simulation.</div>
+<div style="text-align: justify;">
+<br></div>
+<h4 style="text-align: justify;">
+<strong><span style="color: red; font-size: large;">1. How to start</span></strong></h4>
+<div style="text-align: justify;">
+Now we are going to write a 'template' that you can use for all of the first Tcl scripts. You can write your Tcl scripts in any text editor like joe or emacs. I suggest that you call this first example 'example1.tcl'.</div>
+<div style="text-align: justify;">
+First of all, you need to create a simulator object. This is done with the command</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code style="background-color: yellow;">set ns [new Simulator]</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+Now we open a file for writing that is going to be used for the nam trace data.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code><span style="background-color: yellow;">set nf [open out.nam w]
+$ns namtrace-all $nf</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+The first line opens the file 'out.nam' for writing and gives it the file handle 'nf'. In the second line we tell the simulator object that we created above to write all simulation data that is going to be relevant for nam into this file.</div>
+<div style="text-align: justify;">
+The next step is to add a 'finish' procedure that closes the trace file and starts nam.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code><span style="background-color: yellow;">proc finish {} {
+        global ns nf
+        $ns flush-trace
+        close $nf
+        exec nam out.nam &amp;
+        exit 0
+}</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+You don't really have to understand all of the above code yet. It will get clearer to you once you see what the code does.</div>
+<div style="text-align: justify;">
+The next line tells the simulator object to execute the 'finish' procedure after 5.0 seconds of simulation time.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code><span style="background-color: yellow;">$ns at 5.0 "finish"</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+You probably understand what this line does just by looking at it. ns provides you with a very simple way to schedule events with the 'at' command.</div>
+<div style="text-align: justify;">
+The last line finally starts the simulation.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code style="background-color: yellow;">$ns run
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="-webkit-text-stroke-width: 0px; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+You can actually save the file now and try to run it with 'ns example1.tcl'. You are going to get an error message like 'nam: empty trace file out.nam' though, because until now we haven't defined any objects (nodes, links, etc.) or events. You will have to use the code from this section as starting point in the other sections.&nbsp;</div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; font-family: &#39;Times New Roman&#39;; font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+<b><i>You can download it from<span style="color: red;"><a href="https://drive.google.com/file/d/0B6aQ8IUEyp5NN0JGem5uYTAwQW8/edit?usp=sharing" target="_blank"><span style="color: red;">&nbsp;here</span></a>.</span></i></b></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+<br></div>
+</div>
+<h4 style="text-align: justify;">
+<strong><span style="color: red; font-size: large;">2. Two nodes, one link</span></strong></h4>
+<span style="text-align: justify;">In this section we are going to define a very simple topology with two nodes that are connected by a link. The following two lines define the two nodes. (Note: You have to insert the code in this section&nbsp;before&nbsp;the line '$ns run', or even better, before the line '$ns at 5.0 "finish"').</span><br>
+<br>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">set n0 [$ns node]
+set n1 [$ns node]
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+A new node object is created with the command '$ns node'. The above code creates two nodes and assigns them to the handles 'n0' and 'n1'.</div>
+<div style="text-align: justify;">
+The next line connects the two nodes.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code style="background-color: yellow;">$ns duplex-link $n0 $n1 1Mb 10ms DropTail
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+This line tells the simulator object to connect the nodes n0 and n1 with a duplex link with the bandwidth 1Megabit, a delay of 10ms and a DropTail queue.</div>
+<div style="text-align: justify;">
+Now you can save your file and start the script with 'ns example1.tcl'. nam will be started automatically and you should see an output that resembles the picture below.</div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="199" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss2.gif" width="334"></div>
+<div style="-webkit-text-stroke-width: 0px; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<a href="https://www.blogger.com/null" name="second"></a></div>
+<div style="text-align: justify;">
+<br>
+<i><b>You can download the complete example&nbsp;<a href="https://drive.google.com/file/d/0B6aQ8IUEyp5NaXRVM3FjWW12WWc/edit?usp=sharing" target="_blank"><span style="color: red;">here</span></a></b></i><span id="goog_1374978795"></span><span id="goog_1374978796"></span><a href="https://www.blogger.com/"></a>&nbsp;if it doesn't work for you and you think you might have made a mistake.</div>
+<div style="text-align: justify;">
+<br></div>
+<h4 style="text-align: justify;">
+<strong><span style="color: red; font-size: large;">3. Sending data</span></strong></h4>
+<span style="text-align: justify;">Of course, this example isn't very satisfying yet, since you can only look at the topology, but nothing actually happens, so the next step is to send some data from node n0 to node n1. In ns, data is always being sent from one 'agent' to another. So the next step is to create an agent object that sends data from node n0, and another agent object that receives the data on node n1.</span><br>
+<br>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">#Create a UDP agent and attach it to node n0
+set udp0 [new Agent/UDP]
+$ns attach-agent $n0 $udp0
+
+# Create a CBR traffic source and attach it to udp0
+set cbr0 [new Application/Traffic/CBR]
+$cbr0 set packetSize_ 500
+$cbr0 set interval_ 0.005
+$cbr0 attach-agent $udp0
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+<br>
+These lines create a UDP agent and attach it to the node n0, then attach a CBR traffic generator to the UDP agent. CBR stands for 'constant bit rate'. Line 7 and 8 should be self-explaining. The packet Size is being set to 500 bytes and a packet will be sent every 0.005 seconds (i.e. 200 packets per second).&nbsp;</div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+The next lines create a Null agent which acts as traffic sink and attach it to node n1.</div>
+</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;">set null0 [new Agent/Null]&nbsp;</span><code></code><br>
+<pre><code style="background-color: yellow;">$ns attach-agent $n1 $null0
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+Now the two agents have to be connected with each other.</div>
+</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;">$ns connect $udp0 $null0</span><code></code><br>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+And now we have to tell the CBR agent when to send data and when to stop sending. Note: It's probably best to put the following lines just before the line '$ns at 5.0 "finish"'.</div>
+</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code style="background-color: yellow;">$ns at 0.5 "$cbr0 start"
+$ns at 4.5 "$cbr0 stop"
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+This code should be self-explaining again.</div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+Now you can save the file and start the simulation again. When you click on the 'play' button in the nam window, you will see that after 0.5 simulation seconds, node 0 starts sending data packets to node 1. You might want to slow nam down then with the 'Step' slider.</div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="199" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss3.gif" width="334"></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &#39;Times New Roman&#39;; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+I suggest that now you start some experiments with nam and the Tcl script. You can click on any packet in the nam window to monitor it, and you can also click directly on the link to get some graphs with statistics. I also suggest that you try to change the 'packetsize_' and 'interval_' parameters in the Tcl script to see what happens.&nbsp;</div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; font-family: &#39;Times New Roman&#39;; font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+<div style="text-align: justify;">
+<i><b>You can download the full example&nbsp;<a href="https://drive.google.com/file/d/0B6aQ8IUEyp5NbVRTSU5OSEx1OVU/edit?usp=sharing"><span style="color: red;">here.</span></a></b></i></div>
+</div>
+<div style="text-align: justify;">
+<a href="https://www.blogger.com/null" name="third"></a><br></div>
+<div style="text-align: justify;">
+<span style="color: red; font-size: large;"><b>4. The topology</b></span></div>
+<div style="text-align: justify;">
+<br></div>
+<div style="text-align: justify;">
+As always, the first step is to define the topology. You should create a file 'example2.tcl', using the&nbsp;<a href="https://drive.google.com/file/d/0B6aQ8IUEyp5NdUZqQXlDbFhKWEU/edit?usp=sharing" target="_blank">code</a>&nbsp;from&nbsp;section 1&nbsp;as a template. As I said before, this code will always be similar. You will always have to create a simulator object, you will always have to start the simulation with the same command, and if you want to run nam automatically, you will always have to open a trace file, initialize it, and define a procedure which closes it and starts nam.</div>
+<div style="text-align: justify;">
+Now insert the following lines into the code to create four nodes.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">set n0 [$ns node]
+set n1 [$ns node]
+set n2 [$ns node]
+set n3 [$ns node]
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+The following piece of Tcl code creates three duplex links between the nodes.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">$ns duplex-link $n0 $n2 1Mb 10ms DropTail
+$ns duplex-link $n1 $n2 1Mb 10ms DropTail
+$ns duplex-link $n3 $n2 1Mb 10ms DropTail
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+You can save and start the script now. You might notice that the topology looks a bit awkward in nam. You can hit the 're-layout' button to make it look better, but it would be nice to have some more control over the layout. Add the next three lines to your Tcl script and start it again.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code><span style="background-color: yellow;">$ns duplex-link-op $n0 $n2 orient right-down      
+$ns duplex-link-op $n1 $n2 orient right-up 
+$ns duplex-link-op $n2 $n3 orient right </span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+You will probably understand what this code does when you look at the topology in the nam window now. It should look like the picture below.</div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="199" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss4.gif" width="300"></div>
+<div style="text-align: justify;">
+Note that the autolayout related parts of nam are gone, since now you have taken the layout into your own hands. The options for the orientation of a link are right, left, up, down and combinations of these orientations. You can experiment with these settings later, but for now please leave the topology the way it is.</div>
+<div style="text-align: justify;">
+<strong><br></strong>
+<strong><span style="color: red; font-size: large;">5. The events</span></strong></div>
+<br>
+<div style="text-align: justify;">
+Now we create two UDP agents with CBR traffic sources and attach them to the nodes n0 and n1. Then we create a Null agent and attach it to node n3.</div>
+<br>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">#Create a UDP agent and attach it to node n0
+set udp0 [new Agent/UDP]
+$ns attach-agent $n0 $udp0
+
+# Create a CBR traffic source and attach it to udp0
+set cbr0 [new Application/Traffic/CBR]
+$cbr0 set packetSize_ 500
+$cbr0 set interval_ 0.005
+$cbr0 attach-agent $udp0
+
+#Create a UDP agent and attach it to node n1
+set udp1 [new Agent/UDP]
+$ns attach-agent $n1 $udp1
+
+# Create a CBR traffic source and attach it to udp1
+set cbr1 [new Application/Traffic/CBR]
+$cbr1 set packetSize_ 500
+$cbr1 set interval_ 0.005
+$cbr1 attach-agent $udp1
+
+set null0 [new Agent/Null] 
+$ns attach-agent $n3 $null0 
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+The two CBR agents have to be connected to the Null agent.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">$ns connect $udp0 $null0 
+$ns connect $udp1 $null0
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+We want the first CBR agent to start sending at 0.5 seconds and to stop at 4.5 seconds while the second CBR agent starts at 1.0 seconds and stops at 4.0 seconds.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code><span style="background-color: yellow;">$ns at 0.5 "$cbr0 start" 
+$ns at 1.0 "$cbr1 start"
+$ns at 4.0 "$cbr1 stop"
+$ns at 4.5 "$cbr0 stop"</span>
+
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+When you start the script now with 'ns example2.tcl', you will notice that there is more traffic on the links from n0 to n2 and n1 to n2 than the link from n2 to n3 can carry. A simple calculation confirms this: We are sending 200 packets per second on each of the first two links and the packet size is 500 bytes. This results in a bandwidth of 0.8 megabits per second for the links from n0 to n2 and from n1 to n2. That's a total bandwidth of 1.6Mb/s, but the link between n2 and n3 only has a capacity of 1Mb/s, so obviously some packets are being discarded. But which ones? Both flows are black, so the only way to find out what is happening to the packets is to monitor them in nam by clicking on them. In the next two sections I'm going to show you how to distinguish between different flows and how to see what is actually going on in the queue at the link from n2 to n3.</div>
+<div style="text-align: justify;">
+<a href="https://www.blogger.com/null" name="second"><br></a>
+</div>
+<h4 style="text-align: justify;">
+<strong><span style="color: red; font-size: large;">6. Marking flows</span></strong></h4>
+<div style="text-align: justify;">
+Add the following two lines to your CBR agent definitions.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code><span style="background-color: yellow;">$udp0 set class_ 1
+$udp1 set class_ 2
+</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+The parameter 'fid_' stands for 'flow id'.</div>
+<div style="text-align: justify;">
+Now add the following piece of code to your Tcl script, preferably at the beginning after the simulator object has been created, since this is a part of the simulator setup.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code><span style="background-color: yellow;">$ns color 1 Blue
+$ns color 2 Red
+</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+This code allows you to set different colors for each flow id.</div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="199" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss5.gif" width="300"></div>
+<div style="text-align: justify;">
+Now you can start the script again and one flow should be blue, while the other one is red. Watch the link from node n2 to n3 for a while, and you will notice that after some time the distribution between blue and red packets isn't too fair anymore (at least that's the way it is on my system). In the next section I'll show you how you can look inside this link's queue to find out what is going on there.</div>
+<div style="text-align: justify;">
+<strong><br></strong>
+</div>
+<h4 style="text-align: justify;">
+<strong>7. Monitoring a queue</strong></h4>
+<div style="text-align: justify;">
+<br></div>
+<div style="text-align: justify;">
+You only have to add the following line to your code to monitor the queue for the link from n2 to n3.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code style="background-color: yellow;">$ns duplex-link-op $n2 $n3 queuePos 0.5
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+Start ns again and you will see a picture similar to the one below after a few moments.</div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="199" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss6.gif" width="300"></div>
+<div style="text-align: justify;">
+<a href="https://www.blogger.com/null" name="second"></a><a href="https://www.blogger.com/null" name="third"></a>You can see the packets in the queue now, and after a while you can even see how the packets are being dropped, though (at least on my system, I guess it might be different in later or earlier releases) only blue packets are being dropped. But you can't really expect too much 'fairness' from a simple DropTail queue. So let's try to improve the queueing by using a SFQ (stochastic fair queueing) queue for the link from n2 to n3. Change the link definition for the link between n2 and n3 to the following line.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">$ns duplex-link $n3 $n2 1Mb 10ms SFQ     
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+The queueing should be 'fair' now. The same amount of blue and red packets should be dropped.</div>
+<div style="text-align: justify;">
+<br></div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="199" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss7.gif" width="300"></div>
+<div style="text-align: justify;">
+<a href="https://www.blogger.com/null" name="second"></a><a href="https://www.blogger.com/null" name="fourth"></a><br></div>
+<div style="text-align: justify;">
+<b><i>You can download the full example&nbsp;<a href="https://drive.google.com/file/d/0B6aQ8IUEyp5NYWczY3pwalVqeTg/edit?usp=sharing" target="_blank"><span style="color: red;">here.</span></a></i></b></div>
+<div style="text-align: justify;">
+<br></div>
+<h4 style="text-align: justify;">
+<strong><span style="color: red; font-size: large;">8. Creating a larger topology</span></strong></h4>
+<div style="text-align: left;">
+<span style="text-align: justify;">I suggest you call the Tcl script for this example 'example3.tcl'. You can already insert &nbsp;</span><a href="https://drive.google.com/file/d/0B6aQ8IUEyp5NdUZqQXlDbFhKWEU/edit?usp=sharing" style="text-align: justify;" target="_blank">template</a><span style="text-align: justify;">&nbsp;from&nbsp;section 1&nbsp;into the file.</span></div>
+<div style="text-align: left;">
+<br></div>
+<div style="text-align: justify;">
+As always, the topology has to be created first, though this time we take a different approach which you will find more comfortable when you want to create larger topologies. The following code creates seven nodes and stores them in the array n().</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code><span style="background-color: yellow;">for {set i 0} {$i &lt; 7} {incr i} {
+  set n($i) [$ns node]
+}</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+You have certainly seen 'for' loops in other programming languages before, and I am sure you understand the structure at once. Note that arrays, just like other variables in Tcl, don't have to be declared first.</div>
+<div style="text-align: justify;">
+Now we're going to connect the nodes to create a circular topology. The following piece of code might look a bit more complicated at first.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code><span style="background-color: yellow;">for {set i 0} {$i &lt; 7} {incr i} {
+  $ns duplex-link $n($i) $n([expr ($i+1)%7]) 1Mb 10ms DropTail
+}</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+This 'for' loop connects all nodes with the next node in the array with the exception of the last node, which is being connected with the first node. To accomplish that, I used the '%' (modulo) operator.</div>
+<div style="text-align: justify;">
+When you run the script now, the topology might look a bit strange in nam at first, but after you hit the 're-layout' button it should look like the picture below.</div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="384" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss8.gif" width="425"></div>
+<br>
+<div style="text-align: justify;">
+<span style="font-weight: bold;"><br></span></div>
+<div style="text-align: justify;">
+<strong><span style="color: red; font-size: large;">9. Link failure</span></strong></div>
+<div style="text-align: justify;">
+<br></div>
+<div style="text-align: justify;">
+<br></div>
+<div style="text-align: justify;">
+The next step is to send some data from node n(0) to node n(3).</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><code></code><br>
+<pre><code style="background-color: yellow;">#Create a UDP agent and attach it to node n(0)
+set udp0 [new Agent/UDP]
+$ns attach-agent $n(0) $udp0
+
+# Create a CBR traffic source and attach it to udp0
+set cbr0 [new Application/Traffic/CBR]
+$cbr0 set packetSize_ 500
+$cbr0 set interval_ 0.005
+$cbr0 attach-agent $udp0
+
+set null0 [new Agent/Null]
+$ns attach-agent $n(3) $null0
+
+$ns connect $udp0 $null0
+
+$ns at 0.5 "$cbr0 start"
+$ns at 4.5 "$cbr0 stop"
+</code></pre>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+The code above should look familiar to you by now. The only difference to the last sections is that now we have to use the node array elements.</div>
+<div style="text-align: justify;">
+If you start the script, you will see that the traffic takes the shortest path from node 0 to node 3 through nodes 1 and 2, as could be expected. Now we add another interesting feature. We let the link between node 1 and 2 (which is being used by the traffic) go down for a second.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;"><code></code><br></span>
+<br>
+<pre><code><span style="background-color: yellow;">$ns rtmodel-at 1.0 down $n(1) $n(2)
+$ns rtmodel-at 2.0 up $n(1) $n(2)</span>
+</code></pre>
+<code>
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+It is probably not too hard to understand these two lines. Now you can start the script again and you will see that between the seconds 1.0 and 2.0 the link will be down, and all data that is sent from node 0 is lost.</div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="385" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss9.gif" width="425"></div>
+<div style="text-align: justify;">
+Now I will show you how to use dynamic routing to solve that 'problem'. Add the following line at the beginning of your Tcl script, after the simulator object has been created.</div>
+<table bgcolor="#eeeeee" cellpadding="5" style="text-align: justify;"><tbody>
+<tr><td><span style="background-color: yellow;">$ns rtproto DV</span><code></code><br>
+<code style="background-color: yellow;">
+</code></td></tr>
+</tbody></table>
+<div style="text-align: justify;">
+Start the simulation again, and you will see how at first a lot of small packets run through the network. If you slow nam down enough to click on one of them, you will see that they are 'rtProtoDV' packets which are being used to exchange routing information between the nodes. When the link goes down again at 1.0 seconds, the routing will be updated and the traffic will be re-routed through the nodes 6, 5 and 4.</div>
+<div style="text-align: justify;">
+<img alt="Nam snap shot" height="385" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/namss10.gif" width="425"></div>
+<div style="text-align: justify;">
+<a href="https://www.blogger.com/null" name="second"></a><br></div>
+<div style="text-align: justify;">
+<i><b>You can download the full example&nbsp;<span style="color: red;"><a href="https://drive.google.com/file/d/0B6aQ8IUEyp5NT0NmaENwR3V5emc/edit?usp=sharing" target="_blank"><span style="color: red;">here</span></a>.</span></b></i></div>
+</div>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+</span>
+<span class="post-backlinks post-comment-link">
+</span>
+<span class="post-icons">
+<span class="item-action">
+<a href="https://www.blogger.com/email-post.g?blogID=6303053470301525275&amp;pageID=8238205686643952363" title="Email Page">
+<img alt="" class="icon-action" height="13" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_email.gif" width="18">
+</a>
+</span>
+<span class="item-control blog-admin pid-1835267473">
+<a href="https://www.blogger.com/page-edit.g?blogID=6303053470301525275&amp;pageID=8238205686643952363&amp;from=pencil" title="Edit page">
+<img alt="" class="icon-action" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_edit_allbkg.gif" width="18">
+</a>
+</span>
+</span>
+<div class="post-share-buttons goog-inline-block">
+<a class="goog-inline-block share-button sb-email" href="https://www.blogger.com/share-post.g?blogID=6303053470301525275&amp;pageID=8238205686643952363&amp;target=email" target="_blank" title="Email This">
+<span class="share-button-link-text">
+Email This
+</span>
+</a>
+<a class="goog-inline-block share-button sb-blog" href="https://www.blogger.com/share-post.g?blogID=6303053470301525275&amp;pageID=8238205686643952363&amp;target=blog" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=270,width=475&quot;); return false;" target="_blank" title="BlogThis!">
+<span class="share-button-link-text">
+BlogThis!
+</span>
+</a>
+<a class="goog-inline-block share-button sb-twitter" href="https://www.blogger.com/share-post.g?blogID=6303053470301525275&amp;pageID=8238205686643952363&amp;target=twitter" target="_blank" title="Share to Twitter">
+<span class="share-button-link-text">
+Share to Twitter
+</span>
+</a>
+<a class="goog-inline-block share-button sb-facebook" href="https://www.blogger.com/share-post.g?blogID=6303053470301525275&amp;pageID=8238205686643952363&amp;target=facebook" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=430,width=640&quot;); return false;" target="_blank" title="Share to Facebook">
+<span class="share-button-link-text">
+Share to Facebook
+</span>
+</a>
+<a class="goog-inline-block share-button sb-pinterest" href="https://www.blogger.com/share-post.g?blogID=6303053470301525275&amp;pageID=8238205686643952363&amp;target=pinterest" target="_blank" title="Share to Pinterest">
+<span class="share-button-link-text">
+Share to Pinterest
+</span>
+</a>
+<div class="goog-inline-block google-plus-share-container">
+<div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 32px; height: 20px;"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 32px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" tabindex="0" vspace="0" width="100%" id="I0_1508591194090" name="I0_1508591194090" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/fastbutton.html" data-gapiattached="true" title="G+"></iframe></div></div>
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+<script src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/plusone.js.download" type="text/javascript" gapi_processed="true"></script>
+<div class="cmt_iframe_holder" data-href="http://ns2blogger.blogspot.com/p/introduction-to-wired-topology.html" data-viewtype="" id="undefined"></div>
+</div>
+
+                                      </div></div>
+                                    
+</div>
+<div class="blog-pager" id="blog-pager">
+<a class="home-link" href="http://ns2blogger.blogspot.in/">
+Home
+</a>
+</div>
+<div class="clear"></div>
+<div class="blog-feeds">
+<div class="feed-links">
+Subscribe to:
+<a class="feed-link" href="http://ns2blogger.blogspot.com/feeds/posts/default" target="_blank" type="application/atom+xml">
+Posts
+                                      (
+                                      Atom
+                                      )
+                                    </a>
+</div>
+</div>
+<script type="text/javascript">window.___gcfg = {'lang': 'en_GB'};</script>
+</div><div class="widget HTML" data-version="1" id="HTML3">
+<div class="widget-content">
+<script charset="utf-8" type="text/javascript" src="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_cw&amp;ServiceVersion=20070822&amp;MarketPlace=IN&amp;ID=V20070822%2FIN%2Fnb0ee-21%2F8010%2F58edd70e-1c29-43de-bf46-62701393cdbd&amp;Operation=GetScriptTemplate"> </script><script type="text/javascript" src="http://g-ecx.images-amazon.com/images/G/31/associates/widgets//20070822/IN/Flash/flash.js"></script> <noscript>&lt;a rel="nofollow" href="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_cw&amp;ServiceVersion=20070822&amp;MarketPlace=IN&amp;ID=V20070822%2FIN%2Fnb0ee-21%2F8010%2F58edd70e-1c29-43de-bf46-62701393cdbd&amp;Operation=NoScript"&gt;Amazon.in Widgets&lt;/a&gt;</noscript>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML3&amp;action=editWidget&amp;sectionId=main" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML3&quot;));" target="configHTML3" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</div>
+</div>
+<div class="column-left-outer">
+<div class="column-left-inner">
+<aside>
+<div class="sidebar section" id="sidebar-left-1"><div class="widget HTML" data-version="1" id="HTML10">
+<div class="widget-content">
+<iframe style="width: 120px; height: 240px; display: none !important;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/q.html">
+    </iframe>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML10&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML10&quot;));" target="configHTML10" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" data-version="1" id="HTML9">
+<div class="widget-content">
+<iframe style="width: 120px; height: 240px; display: none !important;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/q(1).html">
+    </iframe>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML9&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML9&quot;));" target="configHTML9" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" data-version="1" id="HTML8">
+<div class="widget-content">
+<iframe style="width: 120px; height: 240px; display: none !important;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/q(2).html">
+    </iframe>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML8&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML8&quot;));" target="configHTML8" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget Profile" data-version="1" id="Profile1">
+<h2>
+About Me
+</h2>
+<div class="widget-content">
+<a href="https://plus.google.com/114941695049214786176">
+<img alt="My Photo" class="profile-img" height="80" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/photo.jpg" width="80">
+</a>
+<dl class="profile-datablock">
+<dt class="profile-data">
+<a class="profile-name-link g-profile" href="https://plus.google.com/114941695049214786176" rel="author" style="background-image: url(//www.google.com/images/icons/ui/gprofile_button-16.png);" data-gapiscan="true" data-onload="true" data-gapiattached="true">
+ns2 blogger
+</a>
+<br>
+<div id="___follow_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 112px; height: 20px;"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 112px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" tabindex="0" vspace="0" width="100%" id="I0_1508591195024" name="I0_1508591195024" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/follow.html" data-gapiattached="true"></iframe></div>
+</dt>
+<dd class="profile-textblock">
+Official Account
+</dd>
+</dl>
+<a class="profile-link" href="https://plus.google.com/114941695049214786176" rel="author">
+View my complete profile
+</a>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=Profile&amp;widgetId=Profile1&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;Profile1&quot;));" target="configProfile1" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML7">
+<div class="widget-content">
+<a target="_blank" href="https://www.amazon.in/b?_encoding=UTF8&amp;tag=nb0ee-21&amp;linkCode=ur2&amp;linkId=7c569a9c1097c23030af7082d3d9809e&amp;camp=3638&amp;creative=24630&amp;node=3561110031">Click here</a><img src="http://ir-in.amazon-adsystem.com/e/ir?t=nb0ee-21&amp;l=ur2&amp;o=31" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML7&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML7&quot;));" target="configHTML7" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" data-version="1" id="HTML2">
+<div class="widget-content">
+<script charset="utf-8" type="text/javascript" src="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_cw&amp;ServiceVersion=20070822&amp;MarketPlace=IN&amp;ID=V20070822%2FIN%2Fnb0ee-21%2F8010%2Fccb7830f-20fe-4833-a142-efa2366e3585&amp;Operation=GetScriptTemplate"> </script><script type="text/javascript" src="http://g-ecx.images-amazon.com/images/G/31/associates/widgets//20070822/IN/Flash/flash.js"></script> <noscript>&lt;a rel="nofollow" href="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_cw&amp;ServiceVersion=20070822&amp;MarketPlace=IN&amp;ID=V20070822%2FIN%2Fnb0ee-21%2F8010%2Fccb7830f-20fe-4833-a142-efa2366e3585&amp;Operation=NoScript"&gt;Amazon.in Widgets&lt;/a&gt;</noscript>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML2&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML2&quot;));" target="configHTML2" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget BlogArchive" data-version="1" id="BlogArchive1">
+<h2>
+POSTS
+</h2>
+<div class="widget-content">
+<div id="ArchiveList">
+<div id="BlogArchive1_ArchiveList">
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+              ▼&nbsp;
+              
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2016/">
+2016
+</a>
+<span class="post-count" dir="ltr">
+                (
+                8
+                )
+              </span>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+              ▼&nbsp;
+              
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2016/12/">
+December
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+<ul class="posts">
+<li>
+<a href="http://ns2blogger.blogspot.in/2016/12/software-defined-networks-sdn.html">
+SOFTWARE DEFINED NETWORKS (SDN) SIMULATION IN NS2
+</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2016/07/">
+July
+</a>
+<span class="post-count" dir="ltr">
+                (
+                2
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2016/06/">
+June
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2016/05/">
+May
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2016/04/">
+April
+</a>
+<span class="post-count" dir="ltr">
+                (
+                2
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2016/03/">
+March
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/">
+2015
+</a>
+<span class="post-count" dir="ltr">
+                (
+                17
+                )
+              </span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/12/">
+December
+</a>
+<span class="post-count" dir="ltr">
+                (
+                2
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/11/">
+November
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/09/">
+September
+</a>
+<span class="post-count" dir="ltr">
+                (
+                2
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/07/">
+July
+</a>
+<span class="post-count" dir="ltr">
+                (
+                2
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/04/">
+April
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/02/">
+February
+</a>
+<span class="post-count" dir="ltr">
+                (
+                5
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2015/01/">
+January
+</a>
+<span class="post-count" dir="ltr">
+                (
+                4
+                )
+              </span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/">
+2014
+</a>
+<span class="post-count" dir="ltr">
+                (
+                39
+                )
+              </span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/12/">
+December
+</a>
+<span class="post-count" dir="ltr">
+                (
+                2
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/11/">
+November
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/08/">
+August
+</a>
+<span class="post-count" dir="ltr">
+                (
+                1
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/07/">
+July
+</a>
+<span class="post-count" dir="ltr">
+                (
+                4
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/06/">
+June
+</a>
+<span class="post-count" dir="ltr">
+                (
+                3
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/05/">
+May
+</a>
+<span class="post-count" dir="ltr">
+                (
+                16
+                )
+              </span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+              ►&nbsp;
+            
+</span>
+</a>
+<a class="post-count-link" href="http://ns2blogger.blogspot.in/2014/04/">
+April
+</a>
+<span class="post-count" dir="ltr">
+                (
+                12
+                )
+              </span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=BlogArchive&amp;widgetId=BlogArchive1&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;BlogArchive1&quot;));" target="configBlogArchive1" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget PageList" data-version="1" id="PageList1">
+<h2>
+TOPICS
+</h2>
+<div class="widget-content">
+<ul>
+<li>
+<a href="http://ns2blogger.blogspot.in/">
+Home
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/blog-page_5.html">
+INTRODUCTION TO NETWORK SIMULATION
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/introduction-to-ns2.html">
+INTRODUCTION TO NS2
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/the-easiest-way-to-install-ns-2-on_5.html">
+NS2 INSTALLATION ON WINDOWS
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/ns2-in.html">
+NS2 INSTALLATION ON MAC
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/1-ns-allinone-2.html">
+NS2 INSTALLATION ON LINUX
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/for-ns2-beginners.html">
+BEGINNERS TUTORIAL
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/n.html">
+NS2 DIRECTORY AND LANGUAGES
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/network-components_11.html">
+NETWORK COMPONENTS
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/network-animator-nam.html">
+NETWORK ANIMATOR [NAM]
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/plotting-results-on-xgraph.html">
+PLOTTING RESULTS ON XGRAPH or GNUPLOT
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/the-file-written-by-application-or-by.html">
+TRACE FILES AND DESCRIPTION
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/awk-scripting-on-ns2.html">
+AWK AND PERL SCRIPTING ON NS2 WITH SCRIPTS
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/protocols-models-and-researches.html">
+PROTOCOLS AND MODELS SUPPORTED BY NS2 IN WIRED NETWORKS
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/protocols-and-models-support-by-ns2-in.html">
+PROTOCOLS AND MODELS SUPPORT BY NS2 IN WIRELESS NETWORKS
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/ns2-program-for-wireless-topology.html">
+NS2 PROGRAM TUTORIAL FOR WIRELESS TOPOLOGY
+</a>
+</li>
+<li class="selected">
+<a href="http://ns2blogger.blogspot.in/p/introduction-to-wired-topology.html">
+NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/ns2.html">
+NS2 PROGRAM TUTORIAL FOR WIRED CUM WIRELESS AND MOBILE IP SIMULATIONS
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/to-implement-new-protocol.html">
+TO IMPLEMENT A NEW PROTOCOL
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/example-programs.html">
+PROGRAMS FOR YOU
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/tour-de-ns2.html">
+TOUR DE NS2
+</a>
+</li>
+<li>
+<a href="http://ns2blogger.blogspot.in/p/documents.html">
+E-Shelf
+</a>
+</li>
+</ul>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=PageList&amp;widgetId=PageList1&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;PageList1&quot;));" target="configPageList1" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML5">
+<div class="widget-content">
+<script charset="utf-8" type="text/javascript" src="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_mfw&amp;ServiceVersion=20070822&amp;MarketPlace=IN&amp;ID=V20070822%2FIN%2Fnb0ee-21%2F8001%2Fccdade5b-b80b-418c-9acd-756265956ea3"> </script><script charset="utf-8" type="text/javascript" src="http://wms-in.amazon-adsystem.com/panda/20070822/IN/js/8001_5.js"> </script> <noscript>&lt;a rel="nofollow" href="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_mfw&amp;ServiceVersion=20070822&amp;MarketPlace=IN&amp;ID=V20070822%2FIN%2Fnb0ee-21%2F8001%2Fccdade5b-b80b-418c-9acd-756265956ea3&amp;Operation=NoScript"&gt;Amazon.in Widgets&lt;/a&gt;</noscript>
+
+
+<iframe style="width: 120px; height: 240px; display: none !important;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/q(3).html">
+    </iframe>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML5&amp;action=editWidget&amp;sectionId=sidebar-left-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML5&quot;));" target="configHTML5" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</aside>
+</div>
+</div>
+<div class="column-right-outer">
+<div class="column-right-inner">
+<aside>
+<div class="sidebar section" id="sidebar-right-1"><div class="widget Translate" data-version="1" id="Translate1">
+<h2 class="title">
+Translator
+</h2>
+<div id="google_translate_element"><div class="skiptranslate goog-te-gadget" dir="ltr" style=""><div id=":0.targetLanguage" class="goog-te-gadget-simple" style="white-space: nowrap;"><img src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/cleardot.gif" class="goog-te-gadget-icon" alt="" style="background-image: url(&quot;https://translate.googleapis.com/translate_static/img/te_ctrl3.gif&quot;); background-position: -65px 0px;"><span style="vertical-align: middle;"><a aria-haspopup="true" class="goog-te-menu-value" href="javascript:void(0)"><span>Select Language</span><img src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/cleardot.gif" alt="" width="1" height="1"><span style="border-left: 1px solid rgb(187, 187, 187);">​</span><img src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/cleardot.gif" alt="" width="1" height="1"><span aria-hidden="true" style="color: rgb(118, 118, 118);">▼</span></a></span></div></div></div>
+<script>
+          function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+              pageLanguage: 'en',
+              autoDisplay: 'true',
+              layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+                                                  }
+        </script>
+<script src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/element.js.download"></script>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=Translate&amp;widgetId=Translate1&amp;action=editWidget&amp;sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;Translate1&quot;));" target="configTranslate1" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget Stats" data-version="1" id="Stats1">
+<h2>
+PAGE VIEWS
+</h2>
+<div class="widget-content">
+<div id="Stats1_content" style="">
+<img alt="Sparkline" height="30" id="Stats1_sparkline" width="75" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/chart">
+<span class="counter-wrapper graph-counter-wrapper" id="Stats1_totalCount">
+<span class="digit stage-0"><strong>3</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>6</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>7</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>5</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>2</strong><span class="blind-plate"></span></span><span class="digit stage-0"><strong>6</strong><span class="blind-plate"></span></span></span>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=Stats&amp;widgetId=Stats1&amp;action=editWidget&amp;sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;Stats1&quot;));" target="configStats1" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div>
+</div><div class="widget HTML" data-version="1" id="HTML6">
+<div class="widget-content">
+<script type="text/javascript" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/saved_resource(1)"></script><style type="text/css">a.fjfcl74:visited {color: #FCC; font-size: 1px; font-family: Arial, sans-serif;} a.fjfcl74:link {color: #CCC; font-size: 1px; font-family: Arial, sans-serif;}</style><div id="FJ_TF_Cont" style="position: relative; padding: 0; margin: 0; border-width: 0px; width: 185px;"><iframe width="195" height="750" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/introduction-to-wired-topology.html" name="FJIframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" style="width: 195px; border-width: 0px; z-index: 1;"></iframe></div><noscript>&lt;a href="http://feedjit.com/"&gt;Live Traffic Stats&lt;/a&gt;</noscript>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML6&amp;action=editWidget&amp;sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML6&quot;));" target="configHTML6" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" data-version="1" id="HTML4">
+<div class="widget-content">
+<a target="_blank" href="https://www.amazon.in/b?_encoding=UTF8&amp;tag=nb0ee-21&amp;linkCode=ur2&amp;linkId=0dd00c77f8eebfd9e8e8b52d74e9603c&amp;camp=3638&amp;creative=24630&amp;node=1389494031">Kindle for readers</a><img src="http://ir-in.amazon-adsystem.com/e/ir?t=nb0ee-21&amp;l=ur2&amp;o=31" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+<iframe style="width: 120px; height: 240px; display: none !important;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/q(4).html">
+    </iframe>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML4&amp;action=editWidget&amp;sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML4&quot;));" target="configHTML4" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" data-version="1" id="HTML13">
+<h2 class="title">
+LIVE COMMUNITY
+</h2>
+<div class="widget-content">
+<iframe width="250" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" allowtransparency="true" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/yabj.html"></iframe><br><div style="font-size:0.9em;text-align:center;"><a href="http://chatroll.com/">Chat Software</a></div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=6303053470301525275&amp;widgetType=HTML&amp;widgetId=HTML13&amp;action=editWidget&amp;sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML13&quot;));" target="configHTML13" title="Edit">
+<img alt="" height="18" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<div style="clear: both"></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class="main-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<!-- content -->
+</div>
+</div>
+<div class="content-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div><iframe name="oauth2relay744804997" id="oauth2relay744804997" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/postmessageRelay.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe>
+<script type="text/javascript">
+      window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+                                                                  }, 10);
+    </script>
+<script src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/plusone.js.download" type="text/javascript" gapi_processed="true"></script>
+
+<script type="text/javascript" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/2730144155-widgets.js.download"></script>
+<script type="text/javascript">
+window['__wavt'] = 'AOuZoY7x3stWhnOqikg0kgCqJPO3QzHreQ:1508591185806';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d6303053470301525275','//ns2blogger.blogspot.in/p/introduction-to-wired-topology.html','6303053470301525275');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '6303053470301525275', 'title': 'NETWORK SIMULATOR', 'url': 'http://ns2blogger.blogspot.in/p/introduction-to-wired-topology.html', 'canonicalUrl': 'http://ns2blogger.blogspot.com/p/introduction-to-wired-topology.html', 'homepageUrl': 'http://ns2blogger.blogspot.in/', 'searchUrl': 'http://ns2blogger.blogspot.in/search', 'canonicalHomepageUrl': 'http://ns2blogger.blogspot.com/', 'blogspotFaviconUrl': 'http://ns2blogger.blogspot.in/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': 'UA-50976784-1', 'encoding': 'UTF-8', 'locale': 'en-GB', 'localeUnderscoreDelimited': 'en_gb', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22NETWORK SIMULATOR - Atom\x22 href\x3d\x22http://ns2blogger.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22NETWORK SIMULATOR - RSS\x22 href\x3d\x22http://ns2blogger.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22NETWORK SIMULATOR - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/6303053470301525275/posts/default\x22 /\x3e\n', 'meTag': '', 'openIdOpTag': '', 'googleProfileUrl': 'https://plus.google.com/114941695049214786176', 'adsenseClientId': 'ca-pub-7611623501845406', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': false, 'ieCssRetrofitLinks': '\x3c!--[if IE]\x3e\x3cscript type\x3d\x22text/javascript\x22 src\x3d\x22https://www.blogger.com/static/v1/jsbin/3858758734-ieretrofit.js\x22\x3e\x3c/script\x3e\n\x3c![endif]--\x3e', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/9972482233b7560f', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'sharing': {'platforms': [{'name': 'Get link', 'key': 'link', 'shareMessage': 'Get link', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Share to Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Share to Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Share to Pinterest', 'target': 'pinterest'}, {'name': 'Google+', 'key': 'googlePlus', 'shareMessage': 'Share to Google+', 'target': 'googleplus'}, {'name': 'Email', 'key': 'email', 'shareMessage': 'Email', 'target': 'email'}], 'googlePlusShareButtonWidth': 300, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27en_GB\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': false, 'jumpLinkMessage': 'Read more', 'pageType': 'static_page', 'pageId': '8238205686643952363', 'pageName': 'NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY', 'pageTitle': 'NETWORK SIMULATOR: NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY'}}, {'name': 'features', 'data': {'lazy_images': 'false', 'unsupported_browser_message': 'false', 'lightbox_img_parsing': 'true', 'video_theatre_support': 'true', 'sharing_get_link_dialog': 'false', 'sharing_native': 'false'}}, {'name': 'messages', 'data': {'edit': 'Edit', 'linkCopiedToClipboard': 'Link copied to clipboard', 'ok': 'Ok', 'postLink': 'Post link'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': 'Custom', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': true}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY', 'description': '    In this section, we are going to develop a Tcl script for ns which simulates a simple topology. You are going to learn how to set up nod...', 'featuredImage': 'https://lh4.googleusercontent.com/proxy/xnUCYvEzyPOCdTkp3ISUWQ4m7szmC5GuITB244wxaNWG8Pm2n6x98sd4qDfllMnUmVJ9KlxF-jmnwMftLyVA63J6v5IYXmXg__Q', 'url': 'http://ns2blogger.blogspot.in/p/introduction-to-wired-topology.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': true, 'isPost': false, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'pageId': 8238205686643952363}}]);
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', null, document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'crosscol', null, document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'main', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'viewType': 'FILTERED_POSTMOD', 'useNgc': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/429906695-lbx__en_gb.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/368954415-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'main', null, document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML10', 'sidebar-left-1', null, document.getElementById('HTML10'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML9', 'sidebar-left-1', null, document.getElementById('HTML9'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML8', 'sidebar-left-1', null, document.getElementById('HTML8'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebar-left-1', null, document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML7', 'sidebar-left-1', null, document.getElementById('HTML7'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar-left-1', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-left-1', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PageListView', new _WidgetInfo('PageList1', 'sidebar-left-1', null, document.getElementById('PageList1'), {'title': 'TOPICS', 'links': [{'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/', 'title': 'Home'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/blog-page_5.html', 'id': '4184722776550134295', 'title': 'INTRODUCTION TO NETWORK SIMULATION'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/introduction-to-ns2.html', 'id': '4633973924873224164', 'title': 'INTRODUCTION TO NS2'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/the-easiest-way-to-install-ns-2-on_5.html', 'id': '6395149012200026849', 'title': 'NS2 INSTALLATION ON WINDOWS'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/ns2-in.html', 'id': '8317340938702035307', 'title': 'NS2 INSTALLATION ON MAC'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/1-ns-allinone-2.html', 'id': '5653932586578625506', 'title': 'NS2 INSTALLATION ON LINUX'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/for-ns2-beginners.html', 'id': '2190132984913410173', 'title': 'BEGINNERS TUTORIAL'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/n.html', 'id': '7496433279307320324', 'title': 'NS2 DIRECTORY AND LANGUAGES'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/network-components_11.html', 'id': '188312004242938690', 'title': 'NETWORK COMPONENTS'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/network-animator-nam.html', 'id': '2656161454053621820', 'title': 'NETWORK ANIMATOR [NAM]'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/plotting-results-on-xgraph.html', 'id': '3993316914295110477', 'title': 'PLOTTING RESULTS ON XGRAPH or GNUPLOT'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/the-file-written-by-application-or-by.html', 'id': '1838684564398802058', 'title': 'TRACE FILES AND DESCRIPTION'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/awk-scripting-on-ns2.html', 'id': '8079456841616317473', 'title': 'AWK AND PERL SCRIPTING ON NS2 WITH SCRIPTS'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/protocols-models-and-researches.html', 'id': '5255846592875552567', 'title': 'PROTOCOLS AND MODELS SUPPORTED BY NS2 IN WIRED NETWORKS'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/protocols-and-models-support-by-ns2-in.html', 'id': '3275191665699611644', 'title': 'PROTOCOLS AND MODELS SUPPORT BY NS2 IN WIRELESS NETWORKS'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/ns2-program-for-wireless-topology.html', 'id': '8065288197184083779', 'title': 'NS2 PROGRAM TUTORIAL FOR WIRELESS TOPOLOGY'}, {'isCurrentPage': true, 'href': 'http://ns2blogger.blogspot.in/p/introduction-to-wired-topology.html', 'id': '8238205686643952363', 'title': 'NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/ns2.html', 'id': '8592284487765508764', 'title': 'NS2 PROGRAM TUTORIAL FOR WIRED CUM WIRELESS AND MOBILE IP SIMULATIONS'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/to-implement-new-protocol.html', 'id': '1098243515030102391', 'title': 'TO IMPLEMENT A NEW PROTOCOL'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/example-programs.html', 'id': '143866285378833416', 'title': 'PROGRAMS FOR YOU'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/tour-de-ns2.html', 'id': '4129744237638942253', 'title': 'TOUR DE NS2'}, {'isCurrentPage': false, 'href': 'http://ns2blogger.blogspot.in/p/documents.html', 'id': '1634452432313105029', 'title': 'E-Shelf'}], 'mobile': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML5', 'sidebar-left-1', null, document.getElementById('HTML5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TranslateView', new _WidgetInfo('Translate1', 'sidebar-right-1', null, document.getElementById('Translate1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_StatsView', new _WidgetInfo('Stats1', 'sidebar-right-1', null, document.getElementById('Stats1'), {'title': 'PAGE VIEWS', 'showGraphicalCounter': true, 'showAnimatedCounter': true, 'showSparkline': true, 'statsUrl': '//ns2blogger.blogspot.in/b/stats?style\x3dBLACK_TRANSPARENT\x26timeRange\x3dALL_TIME\x26token\x3dkCPCQF8BAAA.HC_eXpsfVOI6hvBQMFAU8gqYis8xjsSG1wrdCMz-QTY.Ay325VXBnLoVbQf_fhvodw'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML6', 'sidebar-right-1', null, document.getElementById('HTML6'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'sidebar-right-1', null, document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML13', 'sidebar-right-1', null, document.getElementById('HTML13'), {}, 'displayModeFull'));
+</script><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/translate_24dp.png" width="20" height="20" alt="Google Translate"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Original text</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Contribute a better translation</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
+
+<div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div><iframe frameborder="0" class="goog-te-menu-frame skiptranslate" title="Language Translate Widget" style="visibility: visible; box-sizing: content-box; width: 1030px; height: 263px; display: none;" src="./NETWORK SIMULATOR_ NS2 PROGRAM TUTORIAL FOR WIRED TOPOLOGY_files/saved_resource.html"></iframe></body></html>
